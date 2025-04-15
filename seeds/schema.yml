@@ -1,0 +1,66 @@
+version: 2
+
+seeds:
+  - name: raw_customers
+    description: "Datos iniciales de clientes para cargar en el proyecto"
+    columns:
+      - name: customer_id
+        description: "Identificador único del cliente"
+      - name: first_name
+        description: "Nombre del cliente"
+      - name: last_name
+        description: "Apellido del cliente"
+      - name: email
+        description: "Correo electrónico del cliente"
+      - name: registration_date
+        description: "Fecha de registro del cliente"
+      - name: country
+        description: "País del cliente"
+
+  - name: raw_orders
+    description: "Datos iniciales de pedidos para cargar en el proyecto"
+    columns:
+      - name: order_id
+        description: "Identificador único del pedido"
+      - name: customer_id
+        description: "Identificador del cliente que realizó el pedido"
+      - name: order_date
+        description: "Fecha del pedido"
+      - name: total_amount
+        description: "Importe total del pedido"
+      - name: status
+        description: "Estado del pedido"
+      - name: payment_method
+        description: "Método de pago utilizado"
+
+  - name: raw_products
+    description: "Datos iniciales de productos para cargar en el proyecto"
+    columns:
+      - name: product_id
+        description: "Identificador único del producto"
+      - name: product_name
+        description: "Nombre del producto"
+      - name: category
+        description: "Categoría del producto"
+      - name: price
+        description: "Precio del producto"
+      - name: stock_quantity
+        description: "Cantidad en stock"
+      - name: supplier
+        description: "Proveedor del producto"
+
+  - name: raw_order_items
+    description: "Datos iniciales de ítems de pedidos para cargar en el proyecto"
+    columns:
+      - name: order_item_id
+        description: "Identificador único del ítem del pedido"
+      - name: order_id
+        description: "Identificador del pedido"
+      - name: product_id
+        description: "Identificador del producto"
+      - name: quantity
+        description: "Cantidad del producto en el pedido"
+      - name: unit_price
+        description: "Precio unitario del producto"
+      - name: discount
+        description: "Descuento aplicado al ítem"

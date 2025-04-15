@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: core_business_metrics
+    description: "Métricas de negocio principales"
+    columns:
+      - name: metric_group
+        description: "Grupo de la métrica (Overall, Time, Geography, Product, Customer)"
+      - name: metric_name
+        description: "Nombre de la métrica"
+      - name: metric_value
+        description: "Valor de la métrica"

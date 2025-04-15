@@ -1,0 +1,16 @@
+order_id,customer_id,order_date,total_amount,status,payment_method
+1001,3,2023-01-05,150.50,completed,credit_card
+1002,1,2023-01-10,85.25,completed,paypal
+1003,5,2023-01-12,220.00,processing,bank_transfer
+1004,2,2023-01-15,45.75,completed,credit_card
+1005,8,2023-01-18,195.30,completed,paypal
+1006,4,2023-01-22,65.80,cancelled,credit_card
+1007,7,2023-01-25,320.45,completed,credit_card
+1008,10,2023-01-28,110.90,processing,paypal
+1009,6,2023-01-30,75.60,completed,bank_transfer
+1010,9,2023-02-02,430.20,processing,credit_card
+1011,3,2023-02-05,95.75,completed,paypal
+1012,1,2023-02-08,140.30,completed,credit_card
+1013,5,2023-02-10,210.50,cancelled,bank_transfer
+1014,2,2023-02-15,55.90,completed,paypal
+1015,8,2023-02-18,180.25,processing,credit_card

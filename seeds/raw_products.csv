@@ -1,0 +1,13 @@
+product_id,product_name,category,price,stock_quantity,supplier
+101,Laptop Modelo X,Electronics,999.99,50,TechSupplier
+102,Smartphone Galaxy,Electronics,599.99,100,MobileWorld
+103,Tablet Pro,Electronics,399.99,75,TechSupplier
+201,Camisa Casual,Clothing,29.99,200,FashionStore
+202,Pantalón Vaquero,Clothing,49.99,150,DenimCo
+203,Vestido Elegante,Clothing,79.99,80,FashionStore
+301,Set de Cocina,Home,149.99,30,HomeEssentials
+302,Lámpara Moderna,Home,59.99,65,LightingCo
+303,Juego de Sábanas,Home,39.99,120,HomeEssentials
+401,Libro Bestseller,Books,19.99,300,BookPublisher
+402,Revista Mensual,Books,7.99,500,MagazineInc
+403,Manual Técnico,Books,34.99,100,TechBooks

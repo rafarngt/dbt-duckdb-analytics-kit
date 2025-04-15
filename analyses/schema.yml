@@ -1,0 +1,42 @@
+version: 2
+
+analyses:
+  - name: customer_analysis
+    description: "Análisis detallado del comportamiento de compra de los clientes, incluyendo métricas de frecuencia y recencia."
+    columns:
+      - name: customer_id
+        description: "ID único del cliente"
+      - name: total_orders
+        description: "Número total de pedidos realizados por el cliente"
+      - name: total_spent
+        description: "Cantidad total gastada por el cliente"
+      - name: frequency_segment
+        description: "Segmentación por frecuencia de compra (Alto, Medio, Bajo)"
+      - name: recency_segment
+        description: "Segmentación por recencia de compra (Reciente, Regular, Inactivo)"
+
+  - name: product_performance
+    description: "Análisis detallado del rendimiento de productos, incluyendo ventas, frecuencia y contribución a ingresos."
+    columns:
+      - name: product_id
+        description: "ID único del producto"
+      - name: total_units_sold
+        description: "Número total de unidades vendidas"
+      - name: total_revenue
+        description: "Ingresos totales generados por el producto"
+      - name: pct_total_revenue
+        description: "Porcentaje de contribución a los ingresos totales"
+      - name: category_importance
+        description: "Clasificación de importancia dentro de su categoría (High, Medium, Low)"
+
+  - name: order_trends_by_time
+    description: "Análisis de tendencias de pedidos a lo largo del tiempo, con métricas de crecimiento mensual."
+    columns:
+      - name: month_date
+        description: "Mes del análisis"
+      - name: order_count
+        description: "Número de pedidos en el período"
+      - name: total_revenue
+        description: "Ingresos totales en el período"
+      - name: revenue_growth_pct
+        description: "Porcentaje de crecimiento de ingresos respecto al mes anterior" 

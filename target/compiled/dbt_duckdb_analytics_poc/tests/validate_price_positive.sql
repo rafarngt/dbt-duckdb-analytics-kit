@@ -1,0 +1,13 @@
+-- Validar que todos los precios son positivos
+-- Esta prueba verifica que no hay productos con precios negativos o cero
+
+WITH validation AS (
+    SELECT
+        product_id,
+        product_name,
+        price
+    FROM "analytics_dev"."main"."dim_products"
+    WHERE price <= 0
+)
+
+SELECT * FROM validation

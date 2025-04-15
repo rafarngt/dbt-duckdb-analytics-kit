@@ -1,0 +1,113 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Modelo de staging para clientes"
+    columns:
+      - name: customer_id
+        description: "Identificador único del cliente"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: "Nombre del cliente"
+      - name: last_name
+        description: "Apellido del cliente"
+      - name: email
+        description: "Correo electrónico del cliente"
+        tests:
+          - not_null
+      - name: registration_date
+        description: "Fecha de registro del cliente"
+      - name: country
+        description: "País del cliente"
+      - name: full_name
+        description: "Nombre completo del cliente"
+      - name: days_since_registration
+        description: "Días transcurridos desde el registro del cliente"
+
+  - name: stg_orders
+    description: "Modelo de staging para pedidos"
+    columns:
+      - name: order_id
+        description: "Identificador único del pedido"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Identificador del cliente que realizó el pedido"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: order_date
+        description: "Fecha del pedido"
+      - name: total_amount
+        description: "Importe total del pedido"
+      - name: status
+        description: "Estado del pedido"
+      - name: payment_method
+        description: "Método de pago utilizado"
+      - name: order_year
+        description: "Año del pedido"
+      - name: order_month
+        description: "Mes del pedido"
+      - name: is_completed
+        description: "Indicador de si el pedido está completado"
+
+  - name: stg_products
+    description: "Modelo de staging para productos"
+    columns:
+      - name: product_id
+        description: "Identificador único del producto"
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: "Nombre del producto"
+      - name: category
+        description: "Categoría del producto"
+      - name: price
+        description: "Precio del producto"
+      - name: stock_quantity
+        description: "Cantidad en stock"
+      - name: supplier
+        description: "Proveedor del producto"
+      - name: stock_level
+        description: "Nivel de stock (Low, Medium, High)"
+      - name: inventory_value
+        description: "Valor del inventario (precio * cantidad)"
+
+  - name: stg_order_items
+    description: "Modelo de staging para ítems de pedidos"
+    columns:
+      - name: order_item_id
+        description: "Identificador único del ítem del pedido"
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: "Identificador del pedido"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: product_id
+        description: "Identificador del producto"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+      - name: quantity
+        description: "Cantidad del producto en el pedido"
+      - name: unit_price
+        description: "Precio unitario del producto"
+      - name: discount
+        description: "Descuento aplicado al ítem"
+      - name: gross_amount
+        description: "Importe bruto del ítem (sin descuento)"
+      - name: net_amount
+        description: "Importe neto del ítem (con descuento aplicado)"

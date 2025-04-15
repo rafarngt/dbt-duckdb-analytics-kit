@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: snapshots
+    schema: snapshots
+    tables:
+      - name: customers_snapshot
+        description: "Histórico de cambios en los datos de clientes"
+        columns:
+          - name: customer_id
+            description: "Identificador único del cliente"
+          - name: dbt_valid_from
+            description: "Fecha/hora desde la cual esta versión del registro es válida"
+          - name: dbt_valid_to
+            description: "Fecha/hora hasta la cual esta versión del registro es válida (NULL si es actual)"
+
+      - name: products_snapshot
+        description: "Histórico de cambios en los datos de productos"
+        columns:
+          - name: product_id
+            description: "Identificador único del producto"
+          - name: dbt_valid_from
+            description: "Fecha/hora desde la cual esta versión del registro es válida"
+          - name: dbt_valid_to
+            description: "Fecha/hora hasta la cual esta versión del registro es válida (NULL si es actual)" 

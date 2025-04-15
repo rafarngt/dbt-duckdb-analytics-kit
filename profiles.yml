@@ -1,0 +1,27 @@
+dbt_duckdb_analytics_poc:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: /Users/rafaelnoriega/Documents/github/dbt-duckdb-analytics-poc/data/analytics_dev.duckdb
+      threads: 4
+      extensions:
+        - httpfs
+        - parquet
+    
+    staging:
+      type: duckdb
+      path: /Users/rafaelnoriega/Documents/github/dbt-duckdb-analytics-poc/data/analytics_staging.duckdb
+      threads: 4
+      extensions:
+        - httpfs
+        - parquet
+    
+    prod:
+      type: duckdb
+      path: /Users/rafaelnoriega/Documents/github/dbt-duckdb-analytics-poc/data/analytics_prod.duckdb
+      threads: 8
+      extensions:
+        - httpfs
+        - parquet
+        - json

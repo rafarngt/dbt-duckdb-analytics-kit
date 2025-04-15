@@ -1,0 +1,11 @@
+customer_id,first_name,last_name,email,registration_date,country
+1,Juan,García,juan.garcia@example.com,2022-01-15,España
+2,María,López,maria.lopez@example.com,2022-02-20,México
+3,Carlos,Martínez,carlos.martinez@example.com,2022-03-10,Argentina
+4,Ana,Rodríguez,ana.rodriguez@example.com,2022-01-25,Colombia
+5,Luis,Hernández,luis.hernandez@example.com,2022-04-05,Chile
+6,Laura,González,laura.gonzalez@example.com,2022-03-15,Perú
+7,Pedro,Díaz,pedro.diaz@example.com,2022-02-10,España
+8,Carmen,Torres,carmen.torres@example.com,2022-05-08,México
+9,Javier,Sánchez,javier.sanchez@example.com,2022-04-22,Argentina
+10,Sofía,Ramírez,sofia.ramirez@example.com,2022-01-30,Colombia

@@ -1,0 +1,102 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Dimensión de clientes con métricas agregadas"
+    columns:
+      - name: customer_id
+        description: "Identificador único del cliente"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: "Nombre del cliente"
+      - name: last_name
+        description: "Apellido del cliente"
+      - name: full_name
+        description: "Nombre completo del cliente"
+      - name: email
+        description: "Correo electrónico del cliente"
+      - name: registration_date
+        description: "Fecha de registro del cliente"
+      - name: country
+        description: "País del cliente"
+      - name: days_since_registration
+        description: "Días transcurridos desde el registro del cliente"
+      - name: order_count
+        description: "Número total de pedidos realizados por el cliente"
+      - name: lifetime_value
+        description: "Valor total de todos los pedidos del cliente"
+      - name: customer_value_segment
+        description: "Segmento de valor del cliente (Low, Medium, High)"
+
+  - name: dim_products
+    description: "Dimensión de productos con métricas de ventas"
+    columns:
+      - name: product_id
+        description: "Identificador único del producto"
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: "Nombre del producto"
+      - name: category
+        description: "Categoría del producto"
+      - name: price
+        description: "Precio del producto"
+      - name: stock_quantity
+        description: "Cantidad en stock"
+      - name: supplier
+        description: "Proveedor del producto"
+      - name: stock_level
+        description: "Nivel de stock (Low, Medium, High)"
+      - name: inventory_value
+        description: "Valor del inventario (precio * cantidad)"
+      - name: total_quantity_sold
+        description: "Cantidad total vendida del producto"
+      - name: total_sales
+        description: "Ventas totales del producto"
+      - name: product_performance
+        description: "Rendimiento del producto (Low, Medium, High)"
+
+  - name: fct_orders
+    description: "Tabla de hechos de pedidos con información detallada"
+    columns:
+      - name: order_id
+        description: "Identificador único del pedido"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Identificador del cliente que realizó el pedido"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+      - name: customer_name
+        description: "Nombre completo del cliente"
+      - name: customer_country
+        description: "País del cliente"
+      - name: order_date
+        description: "Fecha del pedido"
+      - name: order_year
+        description: "Año del pedido"
+      - name: order_month
+        description: "Mes del pedido"
+      - name: status
+        description: "Estado del pedido"
+      - name: payment_method
+        description: "Método de pago utilizado"
+      - name: order_total_amount
+        description: "Importe total del pedido"
+      - name: total_items
+        description: "Número total de ítems en el pedido"
+      - name: gross_order_amount
+        description: "Importe bruto del pedido (sin descuentos)"
+      - name: net_order_amount
+        description: "Importe neto del pedido (con descuentos aplicados)"
+      - name: is_completed
+        description: "Indicador de si el pedido está completado"
+      - name: order_size
+        description: "Tamaño del pedido (Small, Medium, Large)"
