@@ -12,3 +12,7 @@ data/
 .user.yml
 TUTORIAL.md
 .DS_Store
+target/
+target/*
+logs/*
+dbt_packages/*

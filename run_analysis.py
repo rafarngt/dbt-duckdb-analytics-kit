@@ -11,7 +11,7 @@ def main():
         return
     
     analysis_name = sys.argv[1]
-    project_name = "dbt_duckdb_analytics_poc"  # Nombre del proyecto DBT
+    project_name = "dbt_duckdb_analytics_kit"  # Nombre del proyecto DBT
     
     # Ruta al archivo SQL compilado
     sql_path = f"target/compiled/{project_name}/analyses/{analysis_name}.sql"
