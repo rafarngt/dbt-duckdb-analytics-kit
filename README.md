@@ -54,21 +54,13 @@ flowchart TD
     D --> E[Marts Models]
     E --> F[Core Models]
     F --> G[Visualizaciones/BI]
-    
-    style A fill:#f9d5e5,stroke:#333,stroke-width:2px
-    style B fill:#eeeeee,stroke:#333,stroke-width:2px
-    style C fill:#eeeeee,stroke:#333,stroke-width:2px
-    style D fill:#b8e0d2,stroke:#333,stroke-width:2px
-    style E fill:#95d5b2,stroke:#333,stroke-width:2px
-    style F fill:#74c69d,stroke:#333,stroke-width:2px
-    style G fill:#52b788,stroke:#333,stroke-width:2px
 ```
 
 ## 3. Estructura del Proyecto
 
 ```mermaid
 flowchart LR
-    A[dbt_duckdb_analytics_poc] --> B[models]
+    A[dbt-duckdb-analutics-kit] --> B[models]
     A --> C[seeds]
     A --> D[macros]
     A --> E[tests]
@@ -79,17 +71,7 @@ flowchart LR
     B --> J[marts]
     B --> K[core]
     
-    style A fill:#f9f9f9,stroke:#333,stroke-width:2px
-    style B fill:#e6f3ff,stroke:#333,stroke-width:2px
-    style C fill:#e6f3ff,stroke:#333,stroke-width:2px
-    style D fill:#e6f3ff,stroke:#333,stroke-width:2px
-    style E fill:#e6f3ff,stroke:#333,stroke-width:2px
-    style F fill:#e6f3ff,stroke:#333,stroke-width:2px
-    style G fill:#e6f3ff,stroke:#333,stroke-width:2px
-    style H fill:#e6f3ff,stroke:#333,stroke-width:2px
-    style I fill:#cce6ff,stroke:#333,stroke-width:2px
-    style J fill:#cce6ff,stroke:#333,stroke-width:2px
-    style K fill:#cce6ff,stroke:#333,stroke-width:2px
+
 ```
 
 El proyecto está organizado en las siguientes componentes:
@@ -309,15 +291,6 @@ flowchart TD
     G --> I[core_business_metrics]
     H --> I
     
-    style A fill:#f9d5e5,stroke:#333,stroke-width:2px
-    style B fill:#b8e0d2,stroke:#333,stroke-width:2px
-    style C fill:#f9d5e5,stroke:#333,stroke-width:2px
-    style D fill:#b8e0d2,stroke:#333,stroke-width:2px
-    style E fill:#f9d5e5,stroke:#333,stroke-width:2px
-    style F fill:#b8e0d2,stroke:#333,stroke-width:2px
-    style G fill:#95d5b2,stroke:#333,stroke-width:2px
-    style H fill:#95d5b2,stroke:#333,stroke-width:2px
-    style I fill:#74c69d,stroke:#333,stroke-width:2px
 ```
 
 ## 8. Trabajo con Snapshots
