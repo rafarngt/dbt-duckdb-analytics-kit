@@ -11,3 +11,4 @@ venv/
 data/
 .user.yml
 TUTORIAL.md
+.DS_Store
