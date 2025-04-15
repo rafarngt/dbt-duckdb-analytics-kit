@@ -297,6 +297,20 @@ flowchart TD
 
 Los snapshots capturan cambios en los datos a lo largo del tiempo, implementando el patrón SCD tipo 2:
 
+```mermaid
+flowchart TD
+    A[Datos Originales] -->|dbt snapshot| B[Snapshots]
+    B -->|Primera Ejecución| C[Registros con dbt_valid_from=HOY, dbt_valid_to=NULL]
+    B -->|Cambios Detectados| D[Registro Anterior: Actualiza dbt_valid_to=HOY]
+    B -->|Cambios Detectados| E[Nuevo Registro: dbt_valid_from=HOY, dbt_valid_to=NULL]
+    
+    style A fill:#f5f5f5,stroke:#333,stroke-width:1px
+    style B fill:#b8e0d2,stroke:#333,stroke-width:1px
+    style C fill:#d8f3dc,stroke:#333,stroke-width:1px
+    style D fill:#ffddd2,stroke:#333,stroke-width:1px
+    style E fill:#83c5be,stroke:#333,stroke-width:1px
+```
+
 ```bash
 # Ejecutar todos los snapshots
 dbt snapshot
@@ -336,6 +350,24 @@ python run_analysis.py snapshot_history
 
 El proyecto está configurado para soportar múltiples entornos:
 
+```mermaid
+flowchart LR
+    A[Código SQL/DBT] --> B[Target: dev]
+    A --> C[Target: staging]
+    A --> D[Target: prod]
+    B --> E[data/analytics_dev.duckdb]
+    C --> F[data/analytics_staging.duckdb]
+    D --> G[data/analytics_prod.duckdb]
+    
+    style A fill:#f9f9f9,stroke:#333,stroke-width:1px
+    style B fill:#cfe8fc,stroke:#333,stroke-width:1px
+    style C fill:#fff2b2,stroke:#333,stroke-width:1px
+    style D fill:#ffcba5,stroke:#333,stroke-width:1px
+    style E fill:#cfe8fc,stroke:#333,stroke-width:1px
+    style F fill:#fff2b2,stroke:#333,stroke-width:1px
+    style G fill:#ffcba5,stroke:#333,stroke-width:1px
+```
+
 ```bash
 # Desarrollo
 dbt run --target dev
@@ -352,6 +384,20 @@ Cada entorno utiliza un archivo DuckDB diferente para aislar los datos, como se 
 ## 10. Técnicas Avanzadas
 
 ### 10.1 Macros Personalizadas
+
+```mermaid
+flowchart LR
+    A[Macro: format_date] --> B["Código SQL:<br>TO_CHAR(column, 'YYYY-MM-DD')"]
+    C[Macro: currency_format] --> D["Código SQL:<br>FORMAT(column, '$#,##0.00')"]
+    E[Macro: date_dimension] --> F["Genera tabla de<br>dimensión de fechas"]
+    
+    style A fill:#e0f2fe,stroke:#333,stroke-width:1px
+    style B fill:#f0f9ff,stroke:#333,stroke-width:1px
+    style C fill:#e0f2fe,stroke:#333,stroke-width:1px
+    style D fill:#f0f9ff,stroke:#333,stroke-width:1px
+    style E fill:#e0f2fe,stroke:#333,stroke-width:1px
+    style F fill:#f0f9ff,stroke:#333,stroke-width:1px
+```
 
 Ejemplo de macro para formatear fechas:
 
@@ -450,6 +496,26 @@ logs/dbt.log
 
 ## 12. Integración con Python
 
+```mermaid
+flowchart TD
+    A[dbt compile] --> B[SQL Compilado en target/]
+    B --> C[run_analysis.py]
+    C --> D[DuckDB]
+    D --> E[Pandas DataFrame]
+    E --> F[Visualización]
+    E --> G[Análisis]
+    E --> H[Export]
+    
+    style A fill:#d8f3dc,stroke:#333,stroke-width:1px
+    style B fill:#bee1e6,stroke:#333,stroke-width:1px
+    style C fill:#cddafd,stroke:#333,stroke-width:1px
+    style D fill:#ffd6ff,stroke:#333,stroke-width:1px
+    style E fill:#ffadad,stroke:#333,stroke-width:1px
+    style F fill:#ffd6a5,stroke:#333,stroke-width:1px
+    style G fill:#fdffb6,stroke:#333,stroke-width:1px
+    style H fill:#caffbf,stroke:#333,stroke-width:1px
+```
+
 Este proyecto incluye scripts de Python para facilitar el trabajo con los datos:
 
 - `run_query.py` - Ejecuta una consulta SQL directamente en DuckDB
@@ -486,6 +552,37 @@ python run_query.py "COPY (SELECT * FROM main.fct_orders) TO 'exports/orders.par
 ```
 
 ## 14. Mejores Prácticas
+
+```mermaid
+mindmap
+  root((Mejores<br>Prácticas))
+    Nomenclatura
+      ::icon(fa fa-code)
+      stg_[fuente]_[entidad]
+      dim_[entidad]
+      fct_[entidad]
+    Documentación
+      ::icon(fa fa-file-text)
+      schema.yml
+      README.md
+      Comentarios SQL
+    Testing
+      ::icon(fa fa-check-square)
+      not_null
+      unique
+      referential_integrity
+      Pruebas personalizadas
+    Estructura
+      ::icon(fa fa-sitemap)
+      Modelos por capa
+      Fuentes declaradas
+      Snapshots para historial
+    CI/CD
+      ::icon(fa fa-refresh)
+      Validación pre-commit
+      Tests automatizados
+      Documentación actualizada
+```
 
 ### 14.1 Nomenclatura
 - Modelos staging: `stg_[fuente]_[entidad]`
