@@ -303,12 +303,6 @@ flowchart TD
     B -->|Primera Ejecución| C[Registros con dbt_valid_from=HOY, dbt_valid_to=NULL]
     B -->|Cambios Detectados| D[Registro Anterior: Actualiza dbt_valid_to=HOY]
     B -->|Cambios Detectados| E[Nuevo Registro: dbt_valid_from=HOY, dbt_valid_to=NULL]
-    
-    style A fill:#f5f5f5,stroke:#333,stroke-width:1px
-    style B fill:#b8e0d2,stroke:#333,stroke-width:1px
-    style C fill:#d8f3dc,stroke:#333,stroke-width:1px
-    style D fill:#ffddd2,stroke:#333,stroke-width:1px
-    style E fill:#83c5be,stroke:#333,stroke-width:1px
 ```
 
 ```bash
@@ -358,14 +352,7 @@ flowchart LR
     B --> E[data/analytics_dev.duckdb]
     C --> F[data/analytics_staging.duckdb]
     D --> G[data/analytics_prod.duckdb]
-    
-    style A fill:#f9f9f9,stroke:#333,stroke-width:1px
-    style B fill:#cfe8fc,stroke:#333,stroke-width:1px
-    style C fill:#fff2b2,stroke:#333,stroke-width:1px
-    style D fill:#ffcba5,stroke:#333,stroke-width:1px
-    style E fill:#cfe8fc,stroke:#333,stroke-width:1px
-    style F fill:#fff2b2,stroke:#333,stroke-width:1px
-    style G fill:#ffcba5,stroke:#333,stroke-width:1px
+
 ```
 
 ```bash
@@ -390,13 +377,7 @@ flowchart LR
     A[Macro: format_date] --> B["Código SQL:<br>TO_CHAR(column, 'YYYY-MM-DD')"]
     C[Macro: currency_format] --> D["Código SQL:<br>FORMAT(column, '$#,##0.00')"]
     E[Macro: date_dimension] --> F["Genera tabla de<br>dimensión de fechas"]
-    
-    style A fill:#e0f2fe,stroke:#333,stroke-width:1px
-    style B fill:#f0f9ff,stroke:#333,stroke-width:1px
-    style C fill:#e0f2fe,stroke:#333,stroke-width:1px
-    style D fill:#f0f9ff,stroke:#333,stroke-width:1px
-    style E fill:#e0f2fe,stroke:#333,stroke-width:1px
-    style F fill:#f0f9ff,stroke:#333,stroke-width:1px
+
 ```
 
 Ejemplo de macro para formatear fechas:
@@ -505,15 +486,6 @@ flowchart TD
     E --> F[Visualización]
     E --> G[Análisis]
     E --> H[Export]
-    
-    style A fill:#d8f3dc,stroke:#333,stroke-width:1px
-    style B fill:#bee1e6,stroke:#333,stroke-width:1px
-    style C fill:#cddafd,stroke:#333,stroke-width:1px
-    style D fill:#ffd6ff,stroke:#333,stroke-width:1px
-    style E fill:#ffadad,stroke:#333,stroke-width:1px
-    style F fill:#ffd6a5,stroke:#333,stroke-width:1px
-    style G fill:#fdffb6,stroke:#333,stroke-width:1px
-    style H fill:#caffbf,stroke:#333,stroke-width:1px
 ```
 
 Este proyecto incluye scripts de Python para facilitar el trabajo con los datos:
@@ -558,8 +530,8 @@ mindmap
   root((Mejores<br>Prácticas))
     Nomenclatura
       ::icon(fa fa-code)
-      stg_[fuente]_[entidad]
-      dim_[entidad]
+      stg_entidad
+      dim_entidad
       fct_[entidad]
     Documentación
       ::icon(fa fa-file-text)
