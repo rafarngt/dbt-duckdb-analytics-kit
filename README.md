@@ -3,34 +3,36 @@
 Este proyecto es una implementación completa de DBT (Data Build Tool) con DuckDB para realizar análisis de datos de forma local y eficiente, sin necesidad de una infraestructura compleja.
 
 ## Índice
-- [Introducción](#introducción)
-- [Arquitectura](#arquitectura)
-- [Instalación](#instalación)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Flujo de Trabajo](#flujo-de-trabajo)
-- [Análisis de Datos](#análisis-de-datos)
-- [Trabajo con Snapshots](#trabajo-con-snapshots)
-- [Entornos Múltiples](#entornos-múltiples)
-- [Técnicas Avanzadas](#técnicas-avanzadas)
-- [Solución de Problemas](#solución-de-problemas)
-- [Integración con Python](#integración-con-python)
-- [Exportación de Datos](#exportación-de-datos)
-- [Mejores Prácticas](#mejores-prácticas)
-- [Contribuir](#contribuir)
-- [Licencia](#licencia)
-- [Recursos Adicionales](#recursos-adicionales)
+- [1. Introducción](#1-introducción)
+- [2. Arquitectura](#2-arquitectura)
+- [3. Estructura del Proyecto](#3-estructura-del-proyecto)
+- [4. Requisitos Previos y Instalación](#4-requisitos-previos-y-instalación)
+- [5. Flujo de Trabajo Básico](#5-flujo-de-trabajo-básico)
+- [6. Casos de Uso Prácticos](#6-casos-de-uso-prácticos)
+- [7. Diagrama de Dependencias de Modelos](#7-diagrama-de-dependencias-de-modelos)
+- [8. Trabajo con Snapshots](#8-trabajo-con-snapshots)
+- [9. Entornos Múltiples](#9-entornos-múltiples)
+- [10. Técnicas Avanzadas](#10-técnicas-avanzadas)
+- [11. Solución de Problemas](#11-solución-de-problemas)
+- [12. Integración con Python](#12-integración-con-python)
+- [13. Exportación de Datos](#13-exportación-de-datos)
+- [14. Mejores Prácticas](#14-mejores-prácticas)
+- [15. Contribuir](#15-contribuir)
+- [16. Licencia](#16-licencia)
+- [17. Recursos Adicionales](#17-recursos-adicionales)
+- [18. Conclusión](#18-conclusión)
 
-## Introducción
+## 1. Introducción
 
-### ¿Qué es DBT?
+### 1.1 ¿Qué es DBT?
 
 DBT (Data Build Tool) es una herramienta de transformación de datos que permite a los analistas y científicos de datos transformar datos de manera eficiente utilizando SQL. DBT se encarga de la orquestación, documentación y pruebas, permitiéndote concentrarte en escribir transformaciones.
 
-### ¿Qué es DuckDB?
+### 1.2 ¿Qué es DuckDB?
 
 DuckDB es una base de datos analítica embebida, diseñada para ser rápida, eficiente y fácil de usar. Es particularmente buena para análisis de datos y consultas OLAP (Online Analytical Processing), y puede funcionar como un archivo independiente similar a SQLite.
 
-### ¿Por qué utilizar DBT con DuckDB?
+### 1.3 ¿Por qué utilizar DBT con DuckDB?
 
 La combinación de DBT con DuckDB ofrece:
 - Un flujo de trabajo de datos completamente local y portátil
@@ -39,7 +41,7 @@ La combinación de DBT con DuckDB ofrece:
 - Capacidad de trabajar sin conexión
 - Estructura modular y testeable para el código SQL
 
-## Arquitectura
+## 2. Arquitectura
 
 La arquitectura de este proyecto sigue los principios de modelado dimensional y el patrón de medallón (bronze, silver, gold) para procesar y transformar datos:
 
@@ -62,7 +64,7 @@ flowchart TD
     style G fill:#52b788,stroke:#333,stroke-width:2px
 ```
 
-## Estructura del Proyecto
+## 3. Estructura del Proyecto
 
 ```mermaid
 flowchart LR
@@ -93,7 +95,7 @@ flowchart LR
 El proyecto está organizado en las siguientes componentes:
 
 ```
-dbt_duckdb_analytics_poc/
+dbt-duckdb-analytics-kit/
 ├── models/             # Modelos SQL para transformación de datos
 │   ├── staging/        # Modelos iniciales de limpieza
 │   ├── marts/          # Modelos dimensionales para casos de uso
@@ -110,20 +112,34 @@ dbt_duckdb_analytics_poc/
 └── README.md           # Documentación del proyecto
 ```
 
-## Instalación
+### 3.1 Capas de Datos
 
-### Requisitos Previos
+#### 3.1.1 Seeds (Semillas)
+Los archivos CSV en la carpeta `seeds/` se utilizan como datos de entrada iniciales.
+
+#### 3.1.2 Staging Models
+Los modelos en `models/staging/` realizan la limpieza y normalización inicial de los datos sin agregar transformaciones complejas.
+
+#### 3.1.3 Marts Models
+Los modelos en `models/marts/` combinan datos de staging para crear dimensiones y tablas de hechos útiles para casos de uso específicos.
+
+#### 3.1.4 Core Models
+Los modelos en `models/core/` representan métricas y entidades de negocio altamente transformadas.
+
+## 4. Requisitos Previos y Instalación
+
+### 4.1 Requisitos Previos
 
 - Python 3.8 o superior
 - pip (gestor de paquetes de Python)
 - Git
 
-### Paso a Paso
+### 4.2 Instalación Paso a Paso
 
 1. **Clonar el repositorio**:
    ```bash
-   git clone https://github.com/tu-usuario/dbt-duckdb-analytics-poc.git
-   cd dbt-duckdb-analytics-poc
+   git clone https://github.com/tu-usuario/dbt-duckdb-analytics-kit.git
+   cd dbt-duckdb-analytics-kit
    ```
 
 2. **Crear entorno virtual e instalar dependencias**:
@@ -142,13 +158,16 @@ dbt_duckdb_analytics_poc/
 
 3. **Configurar perfil de DBT**:
    ```bash
+   # Crear directorio .dbt en tu directorio home si no existe
    mkdir -p ~/.dbt
+
+   # Copiar el archivo profiles.yml
    cp profiles.yml ~/.dbt/
    ```
 
-## Flujo de Trabajo
+## 5. Flujo de Trabajo Básico
 
-### 1. Inicializar Datos con Seeds
+### 5.1 Inicializar Datos con Seeds
 
 Los seeds son archivos CSV que se cargan directamente en la base de datos:
 
@@ -158,9 +177,10 @@ dbt seed
 
 Este comando carga los archivos CSV de la carpeta `seeds/` en DuckDB.
 
-### 2. Ejecutar Modelos
+### 5.2 Ejecutar Modelos
 
-Ejecutar todos los modelos:
+Para ejecutar todos los modelos y construir tu data warehouse:
+
 ```bash
 dbt run
 ```
@@ -175,7 +195,7 @@ Ejecutar modelos en una capa específica (usar comillas para escapar el asterisc
 dbt run --select "staging.*"
 ```
 
-### 3. Ejecutar Pruebas
+### 5.3 Ejecutar Pruebas
 
 Las pruebas garantizan la calidad e integridad de los datos:
 
@@ -187,7 +207,28 @@ dbt test
 dbt test --select dim_customers
 ```
 
-### 4. Generar Documentación
+DBT soporta varios tipos de pruebas:
+- **Pruebas genéricas**: unique, not_null, relationships, accepted_values
+- **Pruebas personalizadas**: archivos SQL en la carpeta `tests/`
+
+Estas pruebas se definen en los archivos `schema.yml`:
+
+```yaml
+version: 2
+models:
+  - name: dim_customers
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      - name: email
+        tests:
+          - not_null
+          - unique
+```
+
+### 5.4 Generar Documentación
 
 ```bash
 # Generar documentación
@@ -203,21 +244,50 @@ La documentación generada incluye:
 - Pruebas asociadas a cada modelo
 - Código SQL subyacente
 
-## Análisis de Datos
+## 6. Casos de Uso Prácticos
 
-Este proyecto incluye diversos análisis listos para usar. Para ejecutarlos:
+### 6.1 Análisis de Clientes
 
-1. **Compilar los análisis**:
-   ```bash
-   dbt compile
-   ```
+Explora el comportamiento de los clientes y su segmentación:
 
-2. **Ejecutar un análisis específico**:
-   ```bash
-   python run_analysis.py customer_analysis
-   ```
+```bash
+# Primero compilar los análisis
+dbt compile
 
-Análisis disponibles:
+# Ejecutar el análisis de clientes
+python run_analysis.py customer_analysis
+```
+
+O para un análisis más detallado con patrones de compra:
+
+```bash
+python run_analysis.py customer_orders_analysis
+```
+
+### 6.2 Rendimiento de Productos
+
+Analiza qué productos tienen mejor rendimiento:
+
+```bash
+python run_analysis.py product_performance
+```
+
+### 6.3 Tendencias de Ingresos
+
+Examina las tendencias de ingresos a lo largo del tiempo:
+
+```bash
+python run_analysis.py order_trends_by_time
+```
+
+También puedes guardar los resultados en un archivo CSV:
+
+```bash
+python run_analysis.py revenue_trends --save
+```
+
+### 6.4 Resumen de Análisis Disponibles
+
 - `customer_analysis` - Comportamiento de clientes y segmentación
 - `customer_orders_analysis` - Análisis detallado de patrones de compra
 - `product_performance` - Rendimiento de productos por categoría
@@ -225,12 +295,7 @@ Análisis disponibles:
 - `revenue_trends` - Análisis de ingresos por producto y período
 - `snapshot_history` - Historial de cambios en los datos
 
-Para guardar resultados en un archivo CSV:
-```bash
-python run_analysis.py customer_analysis --save
-```
-
-## Diagrama de Dependencias de Modelos
+## 7. Diagrama de Dependencias de Modelos
 
 ```mermaid
 flowchart TD
@@ -255,7 +320,7 @@ flowchart TD
     style I fill:#74c69d,stroke:#333,stroke-width:2px
 ```
 
-## Trabajo con Snapshots
+## 8. Trabajo con Snapshots
 
 Los snapshots capturan cambios en los datos a lo largo del tiempo, implementando el patrón SCD tipo 2:
 
@@ -270,7 +335,7 @@ Esto creará tablas en el esquema `snapshots` que capturan el historial de cambi
 - `dbt_updated_at`: Marca de tiempo usada para el seguimiento
 - `dbt_scd_id`: Identificador único para cada versión del registro
 
-### Consultar Snapshots
+### 8.1 Consultar Snapshots
 
 Para ver los datos históricos:
 
@@ -290,9 +355,11 @@ Para un análisis más detallado de los cambios históricos:
 python run_analysis.py snapshot_history
 ```
 
-> **Nota**: En DuckDB, usa `current_timestamp` (sin paréntesis) en lugar de `current_timestamp()` en tus archivos de snapshot.
+### 8.2 Nota sobre DuckDB y Snapshots
 
-## Entornos Múltiples
+> **Importante**: En DuckDB, usa `current_timestamp` (sin paréntesis) en lugar de `current_timestamp()` en tus archivos de snapshot para evitar errores.
+
+## 9. Entornos Múltiples
 
 El proyecto está configurado para soportar múltiples entornos:
 
@@ -307,11 +374,11 @@ dbt run --target staging
 dbt run --target prod
 ```
 
-Cada entorno utiliza un archivo DuckDB diferente para aislar los datos.
+Cada entorno utiliza un archivo DuckDB diferente para aislar los datos, como se define en `profiles.yml`.
 
-## Técnicas Avanzadas
+## 10. Técnicas Avanzadas
 
-### Macros Personalizadas
+### 10.1 Macros Personalizadas
 
 Ejemplo de macro para formatear fechas:
 
@@ -328,7 +395,7 @@ SELECT {{ format_date('order_date') }} AS formatted_date
 FROM {{ ref('fct_orders') }}
 ```
 
-### Plantillas Jinja
+### 10.2 Plantillas Jinja
 
 DBT utiliza Jinja2 para hacer el SQL más dinámico:
 
@@ -343,7 +410,7 @@ DBT utiliza Jinja2 para hacer el SQL más dinámico:
 {% endfor %}
 ```
 
-### Materialización Incremental
+### 10.3 Materialización Incremental
 
 Para tablas grandes que crecen con el tiempo:
 
@@ -362,9 +429,9 @@ SELECT * FROM {{ ref('stg_orders') }}
 {% endif %}
 ```
 
-## Solución de Problemas
+## 11. Solución de Problemas
 
-### Compilación sin Ejecución
+### 11.1 Compilación sin Ejecución
 
 Para ver el SQL generado sin ejecutarlo:
 
@@ -374,19 +441,19 @@ dbt compile --select my_model
 
 El SQL compilado estará en `target/compiled/{proyecto}/{modelo}.sql`.
 
-### Conflictos con Funciones de Fecha/Hora en DuckDB
+### 11.2 Conflictos con Funciones de Fecha/Hora en DuckDB
 
 Si encuentras errores relacionados con funciones de fecha en DuckDB:
 - Usa `CAST(columna AS DATE)` en lugar de `DATE(columna)`
 - Usa `current_timestamp` sin paréntesis, no `current_timestamp()`
 
-### Errores Comunes y Soluciones
+### 11.3 Errores Comunes y Soluciones
 
 1. **Error con nombres de columnas**: Verifica que los nombres de columnas en tus transformaciones coincidan con los nombres reales en las tablas. Puedes usar `DESCRIBE tabla` para verificar.
 
 2. **Error con ORDER BY y UNION ALL**: En DuckDB, cuando se utiliza ORDER BY o LIMIT dentro de una subconsulta que forma parte de UNION ALL, encierra la subconsulta entre paréntesis.
 
-### Depuración con --vars
+### 11.4 Depuración con --vars
 
 Puedes pasar variables a tu proyecto:
 
@@ -401,14 +468,14 @@ SELECT * FROM {{ ref('stg_orders') }}
 WHERE order_date BETWEEN '{{ var("min_date") }}' AND '{{ var("max_date") }}'
 ```
 
-### Logs de DBT
+### 11.5 Logs de DBT
 
 Los logs detallados se encuentran en:
 ```
 logs/dbt.log
 ```
 
-## Integración con Python
+## 12. Integración con Python
 
 Este proyecto incluye scripts de Python para facilitar el trabajo con los datos:
 
@@ -435,7 +502,7 @@ df.plot(x='metric_name', y='metric_value', kind='bar')
 plt.show()
 ```
 
-## Exportación de Datos
+## 13. Exportación de Datos
 
 ```bash
 # Exportar a CSV
@@ -445,15 +512,15 @@ python run_query.py "COPY (SELECT * FROM main.dim_customers) TO 'exports/custome
 python run_query.py "COPY (SELECT * FROM main.fct_orders) TO 'exports/orders.parquet' (FORMAT PARQUET)"
 ```
 
-## Mejores Prácticas
+## 14. Mejores Prácticas
 
-### Nomenclatura
+### 14.1 Nomenclatura
 - Modelos staging: `stg_[fuente]_[entidad]`
 - Dimensiones: `dim_[entidad]`
 - Hechos: `fct_[entidad]`
 - Análisis: `[entidad]_[análisis]`
 
-### Documentación
+### 14.2 Documentación
 
 Documenta tus modelos en los archivos `schema.yml`:
 
@@ -470,7 +537,22 @@ models:
           - not_null
 ```
 
-## Contribuir
+### 14.3 Pruebas
+
+Crea pruebas para garantizar la calidad de los datos:
+- **Pruebas genéricas**: unique, not_null, relationships, accepted_values
+- **Pruebas personalizadas**: archivos SQL en la carpeta `tests/`
+
+Ejemplo de prueba personalizada (`tests/assert_positive_order_amount.sql`):
+```sql
+-- Esta prueba verifica que todas las órdenes tienen un monto positivo
+SELECT
+    order_id
+FROM {{ ref('fct_orders') }}
+WHERE net_order_amount <= 0
+```
+
+## 15. Contribuir
 
 1. Crea un fork del proyecto
 2. Crea una rama para tu característica (`git checkout -b feature/amazing-feature`)
@@ -478,14 +560,24 @@ models:
 4. Sube los cambios a la rama (`git push origin feature/amazing-feature`)
 5. Abre un Pull Request
 
-## Licencia
+## 16. Licencia
 
 Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
 
-## Recursos Adicionales
+## 17. Recursos Adicionales
 
 - [Documentación oficial de DBT](https://docs.getdbt.com/)
 - [Documentación de DuckDB](https://duckdb.org/docs/)
 - [Guía de estilo de DBT](https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md)
 - [Mejores prácticas para pruebas](https://docs.getdbt.com/docs/build/tests)
-- [Comunidad DBT en Slack](https://community.getdbt.com/) 
+- [Comunidad DBT en Slack](https://community.getdbt.com/)
+
+## 18. Conclusión
+
+Este proyecto te proporciona una introducción completa al uso de DBT con DuckDB para análisis de datos. Has aprendido a configurar el proyecto, ejecutar modelos, realizar pruebas y utilizar técnicas avanzadas para transformar tus datos de manera eficiente y mantenible.
+
+La combinación de DBT con DuckDB es particularmente potente para análisis de datos local y desarrollo rápido de flujos de trabajo de datos. A medida que te familiarices con estas herramientas, podrás desarrollar flujos de trabajo más complejos y obtener insights más profundos de tus datos.
+
+---
+
+¿Encontraste útil este proyecto? ¡Déjanos una ⭐ en el repositorio! 

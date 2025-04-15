@@ -7,3 +7,7 @@ venv/
    __pycache__/
    *.pyc
    analysis_results/
+.qodo/
+data/
+.user.yml
+TUTORIAL.md
